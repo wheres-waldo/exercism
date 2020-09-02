@@ -20,7 +20,7 @@ struct Point {
 
 impl Robot {
     pub fn new(x: i32, y: i32, d: Direction) -> Self {
-        Robot {
+        Self {
             location: Point { x, y },
             facing: d,
         }
@@ -34,9 +34,9 @@ impl Robot {
             West => North,
         };
 
-        Robot {
-            location: self.location,
+        Self {
             facing: new_direction,
+            ..self
         }
     }
 
@@ -48,35 +48,35 @@ impl Robot {
             West => South,
         };
 
-        Robot {
-            location: self.location,
+        Self {
             facing: new_direction,
+            ..self
         }
     }
 
     pub fn advance(self) -> Self {
         let new_location = match self.facing {
             North => Point {
-                x: self.location.x,
                 y: self.location.y + 1,
+                ..self.location
             },
             East => Point {
                 x: self.location.x + 1,
-                y: self.location.y,
+                ..self.location
             },
             South => Point {
-                x: self.location.x,
                 y: self.location.y - 1,
+                ..self.location
             },
             West => Point {
                 x: self.location.x - 1,
-                y: self.location.y,
+                ..self.location
             },
         };
 
-        Robot {
+        Self {
             location: new_location,
-            facing: self.facing,
+            ..self
         }
     }
 
