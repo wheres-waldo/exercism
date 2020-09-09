@@ -45,7 +45,7 @@ pub fn tally(match_results: &str) -> String {
     }
 
     let mut results: Vec<(&&str, &(i32, i32, i32))> = results.iter().collect();
-    results.sort_by(|(_, &(wins1, draws1, _)), (_,&(wins2, draws2, _))| {
+    results.sort_by(|(_, &(wins1, draws1, _)), (_, &(wins2, draws2, _))| {
         (wins2 * 3 + draws2).cmp(&(wins1 * 3 + draws1))
     });
 
