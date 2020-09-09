@@ -2,7 +2,7 @@ use std::collections::BTreeMap;
 
 pub fn tally(match_results: &str) -> String {
     let header = format!(
-        "{0:<31}| {1:>2} | {2:>2} | {3:>2} | {4:>2} | {5:>2}",
+        "{0:<30} | {1:>2} | {2:>2} | {3:>2} | {4:>2} | {5:>2}",
         "Team", "MP", "W", "D", "L", "P"
     );
     let mut results = BTreeMap::new(); // Gives us sorted keys
@@ -52,7 +52,7 @@ pub fn tally(match_results: &str) -> String {
     std::iter::once(header)
         .chain(results.iter().map(|(&team, &(wins, draws, lost))| {
             format!(
-                "{0:<31}| {1:>2} | {2:>2} | {3:>2} | {4:>2} | {5:>2}",
+                "{0:<30} | {1:>2} | {2:>2} | {3:>2} | {4:>2} | {5:>2}",
                 team,
                 wins + draws + lost,
                 wins,
