@@ -8,7 +8,7 @@ pub fn tally(match_results: &str) -> String {
     let mut results = BTreeMap::new(); // Gives us sorted keys
 
     for result in match_results.lines() {
-        let match_up: Vec<&str> = result.split(";").collect();
+        let match_up: Vec<&str> = result.split(';').collect();
         match match_up[2] {
             "win" => {
                 results
