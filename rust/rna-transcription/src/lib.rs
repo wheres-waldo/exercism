@@ -41,6 +41,6 @@ fn dna_to_rna(nucleotide: char) -> char {
         'C' => 'G',
         'G' => 'C',
         'T' => 'A',
-        _ => panic!("Oops, how did we get here? {}", nucleotide),
+        _ => unreachable!(),
     }
 }
