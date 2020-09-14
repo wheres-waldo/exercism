@@ -17,7 +17,7 @@ pub fn to_bytes(values: &[u32]) -> Vec<u8> {
         .flat_map(|&value| {
             (0..=4)
                 .rev()
-                .map(|i| (value >> i * PACKET_SIZE) as u8 & MASK | if i == 0 { 0 } else { MORE })
+                .map(|i| (value >> (i * PACKET_SIZE)) as u8 & MASK | if i == 0 { 0 } else { MORE })
                 .skip_while(|&byte| byte == MORE)
                 .collect::<Vec<u8>>()
         })
@@ -34,11 +34,13 @@ pub fn from_bytes(bytes: &[u8]) -> Result<Vec<u32>, Error> {
         }
     }
 
-    if bytes.windows(5).any(|window| {
+    let overflows = bytes.windows(5).any(|window| {
         window[0..=3].iter().all(|&byte| byte & MORE != 0)
             && window[4] & MORE == 0
             && window[0] > 0x8F
-    }) {
+    });
+
+    if overflows {
         return Err(Overflow);
     }
 
@@ -47,7 +49,7 @@ pub fn from_bytes(bytes: &[u8]) -> Result<Vec<u32>, Error> {
 
         if byte & MORE == 0 {
             numbers.push(value);
-            acc & 0
+            0
         } else {
             value
         }
